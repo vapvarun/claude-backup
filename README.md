@@ -1,10 +1,10 @@
 # Claude Code Skills Collection
 
-A comprehensive collection of Claude Code skills for web development, WordPress, marketing, and more.
+A comprehensive collection of Claude Code skills for web development agencies. Features WordPress development, frontend design, testing, marketing, and more.
 
-## Available Skills
+## Available Skills (32 Total)
 
-### WordPress Development
+### WordPress Development (8 skills)
 | Skill | Description |
 |-------|-------------|
 | **wp-performance-review** | Performance optimization and anti-pattern detection |
@@ -16,24 +16,44 @@ A comprehensive collection of Claude Code skills for web development, WordPress,
 | **plugin-development** | WordPress plugin best practices |
 | **wordpress-gutenberg** | Block editor development |
 
-### Web Development
+### Frontend & UI Development (6 skills)
+| Skill | Description |
+|-------|-------------|
+| **frontend-design** | Distinctive, production-grade UI design |
+| **react-component** | React components with TypeScript, hooks |
+| **css-styling** | Modern CSS, responsive design, animations |
+| **html-markup** | Semantic HTML5, accessibility |
+| **web-artifacts-builder** | React + Tailwind + shadcn/ui components |
+| **theme-factory** | Theming toolkit for styling artifacts |
+
+### Backend & API Development (2 skills)
 | Skill | Description |
 |-------|-------------|
 | **api-endpoint** | REST/GraphQL API development |
 | **javascript** | Modern JS/ES6+ best practices |
-| **react-component** | React components with TypeScript |
-| **css-styling** | Modern CSS, responsive design |
-| **html-markup** | Semantic HTML5, accessibility |
-| **testing** | Unit, integration, and E2E testing |
 
-### General Development
+### Testing & Quality (3 skills)
 | Skill | Description |
 |-------|-------------|
+| **webapp-testing** | Playwright browser testing for web apps |
+| **testing** | Unit, integration, and E2E testing |
 | **code-review** | Code review best practices |
+
+### Development Tools (4 skills)
+| Skill | Description |
+|-------|-------------|
 | **bug-fix** | Systematic debugging approach |
 | **git-workflow** | Git best practices, commits, PRs |
+| **mcp-builder** | MCP server development guide |
+| **skill-creator** | Create new Claude Code skills |
 
-### Content & Marketing
+### Document Processing (2 skills)
+| Skill | Description |
+|-------|-------------|
+| **pdf** | PDF manipulation, extraction, creation |
+| **xlsx** | Excel spreadsheet creation and analysis |
+
+### Content & Marketing (7 skills)
 | Skill | Description |
 |-------|-------------|
 | **marketing** | Product marketing, announcements |
@@ -52,33 +72,42 @@ Copy all skills to your Claude Code configuration:
 cp -r skills/* ~/.claude/skills/
 ```
 
-Or copy specific skills:
+Or copy specific categories:
 
 ```bash
 # WordPress skills
 cp -r skills/wp-* ~/.claude/skills/
 
-# Web development skills
-cp -r skills/javascript ~/.claude/skills/
-cp -r skills/react-component ~/.claude/skills/
+# Frontend skills
+cp -r skills/frontend-design skills/react-component skills/css-styling ~/.claude/skills/
+
+# Testing skills
+cp -r skills/webapp-testing skills/testing ~/.claude/skills/
 ```
 
-## Skill Stats
+## Skill Highlights
 
-- **Total Skills**: 24
-- **WordPress Skills**: 8 (with comprehensive reference docs)
-- **Web Dev Skills**: 6
-- **Marketing Skills**: 5
-- **General Dev Skills**: 5
-
-## WordPress Skills Features
-
-The WordPress skills include:
+### WordPress Skills
 - 200+ code examples with BAD/GOOD patterns
 - WordPress Coding Standards compliance
 - OWASP Top 10 security mapping
 - Reference documentation for deep dives
 - Automatic trigger phrases for context detection
+
+### Frontend Design
+- Distinctive UI that avoids generic "AI slop" aesthetics
+- Typography, color theory, and motion guidelines
+- React + Tailwind + shadcn/ui integration
+
+### Testing
+- Playwright browser automation
+- Server lifecycle management
+- Screenshot capture and verification
+
+### Document Processing
+- PDF extraction, merging, form filling
+- Excel spreadsheet with formulas and formatting
+- Data analysis and visualization
 
 ---
 *Last updated: 2025-12-20*
