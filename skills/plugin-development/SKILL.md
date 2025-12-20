@@ -1258,6 +1258,174 @@ apply_filters( 'plugin_name_output', $output );
  */
 ```
 
+## Dependency Checking
+
+### Check Required Plugins
+
+```php
+<?php
+/**
+ * Plugin dependency checker.
+ * Add to main plugin file BEFORE initializing the plugin.
+ */
+
+class Plugin_Name_Dependencies {
+
+    /**
+     * Required plugins.
+     *
+     * @var array
+     */
+    private static $required = array(
+        array(
+            'path' => 'woocommerce/woocommerce.php',
+            'name' => 'WooCommerce',
+            'version' => '8.0.0',
+        ),
+        array(
+            'path' => 'buddypress/bp-loader.php',
+            'name' => 'BuddyPress',
+            'version' => '12.0.0',
+        ),
+    );
+
+    /**
+     * Check all dependencies.
+     *
+     * @return bool|WP_Error True if OK, WP_Error if not.
+     */
+    public static function check() {
+        // PHP version
+        if ( version_compare( PHP_VERSION, '8.0', '<' ) ) {
+            return new WP_Error( 'php_version', 'PHP 8.0+ required' );
+        }
+
+        // WordPress version
+        if ( version_compare( get_bloginfo( 'version' ), '6.0', '<' ) ) {
+            return new WP_Error( 'wp_version', 'WordPress 6.0+ required' );
+        }
+
+        // Required plugins
+        if ( ! function_exists( 'is_plugin_active' ) ) {
+            require_once ABSPATH . 'wp-admin/includes/plugin.php';
+        }
+
+        foreach ( self::$required as $plugin ) {
+            if ( ! is_plugin_active( $plugin['path'] ) ) {
+                return new WP_Error(
+                    'missing_plugin',
+                    sprintf( '%s is required', $plugin['name'] )
+                );
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Display admin notice for missing dependencies.
+     *
+     * @param WP_Error $error The error object.
+     */
+    public static function admin_notice( $error ) {
+        add_action( 'admin_notices', function() use ( $error ) {
+            printf(
+                '<div class="notice notice-error"><p><strong>%s:</strong> %s</p></div>',
+                esc_html__( 'Plugin Name', 'plugin-name' ),
+                esc_html( $error->get_error_message() )
+            );
+        });
+    }
+}
+
+// Usage in main plugin file
+add_action( 'plugins_loaded', function() {
+    $check = Plugin_Name_Dependencies::check();
+
+    if ( is_wp_error( $check ) ) {
+        Plugin_Name_Dependencies::admin_notice( $check );
+        return;
+    }
+
+    // Initialize plugin only if dependencies met
+    Plugin_Name::instance();
+});
+```
+
+### Conditional Feature Loading
+
+```php
+<?php
+/**
+ * Load features based on available plugins.
+ */
+
+class Plugin_Name_Features {
+
+    /**
+     * Initialize based on available dependencies.
+     */
+    public static function init() {
+        // Always load core
+        require_once PLUGIN_NAME_PATH . 'includes/core.php';
+
+        // WooCommerce integration
+        if ( class_exists( 'WooCommerce' ) ) {
+            require_once PLUGIN_NAME_PATH . 'includes/woocommerce.php';
+        }
+
+        // Elementor widgets
+        if ( did_action( 'elementor/loaded' ) ) {
+            require_once PLUGIN_NAME_PATH . 'includes/elementor.php';
+        }
+
+        // BuddyPress integration
+        if ( function_exists( 'buddypress' ) ) {
+            require_once PLUGIN_NAME_PATH . 'includes/buddypress.php';
+        }
+
+        // ACF integration
+        if ( class_exists( 'ACF' ) ) {
+            require_once PLUGIN_NAME_PATH . 'includes/acf.php';
+        }
+    }
+}
+```
+
+### Common Plugin Detection
+
+```php
+<?php
+/**
+ * Helper functions for detecting common plugins.
+ */
+
+function plugin_name_is_woocommerce_active() {
+    return class_exists( 'WooCommerce' );
+}
+
+function plugin_name_is_elementor_active() {
+    return defined( 'ELEMENTOR_VERSION' );
+}
+
+function plugin_name_is_buddypress_active() {
+    return function_exists( 'buddypress' );
+}
+
+function plugin_name_is_acf_active() {
+    return class_exists( 'ACF' );
+}
+
+function plugin_name_is_gutenberg_active() {
+    return function_exists( 'register_block_type' );
+}
+
+function plugin_name_is_local_environment() {
+    return function_exists( 'wp_get_environment_type' )
+        && wp_get_environment_type() === 'local';
+}
+```
+
 ## Severity Definitions
 
 | Severity | Description |
