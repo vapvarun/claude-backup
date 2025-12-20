@@ -308,3 +308,195 @@ const throttledScroll = throttle(() => {
 - Comment complex logic
 - Use strict equality (`===`)
 - Validate user input
+
+---
+
+## WordPress-Specific JavaScript
+
+### 11. Enqueueing Scripts Properly
+
+```php
+function theme_enqueue_scripts() {
+    // Frontend script
+    wp_enqueue_script(
+        'theme-main',
+        get_template_directory_uri() . '/assets/js/main.js',
+        array(), // dependencies
+        '1.0.0',
+        true // in footer
+    );
+
+    // With jQuery dependency
+    wp_enqueue_script(
+        'theme-jquery-script',
+        get_template_directory_uri() . '/assets/js/custom.js',
+        array('jquery'),
+        '1.0.0',
+        true
+    );
+
+    // Pass PHP data to JavaScript
+    wp_localize_script('theme-main', 'themeData', array(
+        'ajaxUrl' => admin_url('admin-ajax.php'),
+        'restUrl' => rest_url('theme/v1/'),
+        'nonce'   => wp_create_nonce('theme_nonce'),
+        'i18n'    => array(
+            'loading' => __('Loading...', 'theme'),
+            'error'   => __('An error occurred', 'theme'),
+        ),
+    ));
+}
+add_action('wp_enqueue_scripts', 'theme_enqueue_scripts');
+```
+
+### 12. AJAX with admin-ajax.php
+
+```javascript
+// Frontend JavaScript
+async function submitForm(formData) {
+    const data = new FormData();
+    data.append('action', 'theme_submit_form');
+    data.append('nonce', themeData.nonce);
+    data.append('name', formData.name);
+    data.append('email', formData.email);
+
+    try {
+        const response = await fetch(themeData.ajaxUrl, {
+            method: 'POST',
+            body: data,
+            credentials: 'same-origin',
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            return result.data;
+        } else {
+            throw new Error(result.data.message || 'Request failed');
+        }
+    } catch (error) {
+        console.error('AJAX Error:', error);
+        throw error;
+    }
+}
+```
+
+```php
+// PHP handler
+add_action('wp_ajax_theme_submit_form', 'theme_handle_form');
+add_action('wp_ajax_nopriv_theme_submit_form', 'theme_handle_form');
+
+function theme_handle_form() {
+    // Verify nonce
+    if (!wp_verify_nonce($_POST['nonce'], 'theme_nonce')) {
+        wp_send_json_error(array('message' => 'Invalid nonce'));
+    }
+
+    // Sanitize input
+    $name = sanitize_text_field($_POST['name']);
+    $email = sanitize_email($_POST['email']);
+
+    // Process...
+
+    wp_send_json_success(array('message' => 'Form submitted'));
+}
+```
+
+### 13. REST API Requests
+
+```javascript
+// GET request
+async function getPosts() {
+    const response = await fetch(`${themeData.restUrl}posts`, {
+        headers: {
+            'X-WP-Nonce': themeData.nonce,
+        },
+    });
+    return response.json();
+}
+
+// POST request
+async function createPost(data) {
+    const response = await fetch(`${themeData.restUrl}posts`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-WP-Nonce': themeData.nonce,
+        },
+        body: JSON.stringify(data),
+    });
+    return response.json();
+}
+
+// Using wp.apiFetch (Gutenberg)
+wp.apiFetch({ path: '/wp/v2/posts' }).then(posts => {
+    console.log(posts);
+});
+```
+
+### 14. jQuery Compatibility
+
+```javascript
+// WordPress jQuery no-conflict wrapper
+(function($) {
+    $(document).ready(function() {
+        // Your jQuery code here
+        $('.element').on('click', function() {
+            $(this).toggleClass('active');
+        });
+    });
+})(jQuery);
+
+// Or with modern syntax
+jQuery(($) => {
+    $('.element').on('click', function() {
+        $(this).toggleClass('active');
+    });
+});
+```
+
+### 15. Gutenberg/Block Editor JavaScript
+
+```javascript
+// Using wp.data for state
+const { select, dispatch } = wp.data;
+
+// Get current post
+const post = select('core/editor').getCurrentPost();
+
+// Get blocks
+const blocks = select('core/block-editor').getBlocks();
+
+// Using wp.hooks for filters
+wp.hooks.addFilter(
+    'blocks.registerBlockType',
+    'theme/modify-block',
+    (settings, name) => {
+        if (name === 'core/paragraph') {
+            settings.attributes.customAttr = {
+                type: 'string',
+                default: '',
+            };
+        }
+        return settings;
+    }
+);
+
+// Using wp.i18n for translations
+const { __, _n, sprintf } = wp.i18n;
+const message = __('Hello World', 'theme');
+const items = sprintf(_n('%d item', '%d items', count, 'theme'), count);
+```
+
+### 16. WordPress JavaScript Best Practices
+
+- **Always use nonces** for security in AJAX/REST requests
+- **Use wp_localize_script()** to pass data from PHP to JS
+- **Wrap jQuery code** in no-conflict wrapper
+- **Prefer REST API** over admin-ajax for new projects
+- **Use wp.apiFetch** in Gutenberg context
+- **Namespace your code** to avoid conflicts
+- **Load scripts in footer** when possible (`true` as last param)
+- **Use dependencies array** correctly (e.g., `array('jquery', 'wp-element')`)
+- **Handle errors gracefully** with user-friendly messages
+- **Test in both frontend and admin** contexts

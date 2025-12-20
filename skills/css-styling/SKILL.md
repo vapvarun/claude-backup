@@ -369,3 +369,156 @@ h1 {
 - Prefer `transform` and `opacity` for animations
 - Use `contain` for isolated components
 - Lazy load non-critical CSS
+
+---
+
+## WordPress-Specific CSS
+
+### 11. Enqueueing Styles Properly
+
+```php
+// In functions.php or plugin file
+function theme_enqueue_styles() {
+    // Main stylesheet
+    wp_enqueue_style(
+        'theme-style',
+        get_stylesheet_uri(),
+        array(),
+        wp_get_theme()->get('Version')
+    );
+
+    // Additional CSS
+    wp_enqueue_style(
+        'theme-custom',
+        get_template_directory_uri() . '/assets/css/custom.css',
+        array('theme-style'),
+        '1.0.0'
+    );
+}
+add_action('wp_enqueue_scripts', 'theme_enqueue_styles');
+
+// Admin styles
+function theme_admin_styles() {
+    wp_enqueue_style(
+        'theme-admin',
+        get_template_directory_uri() . '/assets/css/admin.css',
+        array(),
+        '1.0.0'
+    );
+}
+add_action('admin_enqueue_scripts', 'theme_admin_styles');
+```
+
+### 12. RTL Support
+
+```php
+// Register RTL stylesheet
+wp_enqueue_style('theme-style', get_stylesheet_uri());
+wp_style_add_data('theme-style', 'rtl', 'replace');
+
+// Or with suffix
+wp_style_add_data('theme-style', 'rtl', get_template_directory_uri() . '/assets/css/style-rtl.css');
+```
+
+```css
+/* Use logical properties for automatic RTL */
+.element {
+    margin-inline-start: 1rem;  /* margin-left in LTR, margin-right in RTL */
+    padding-inline-end: 1rem;   /* padding-right in LTR, padding-left in RTL */
+    text-align: start;          /* left in LTR, right in RTL */
+}
+
+/* Or use [dir] attribute */
+[dir="rtl"] .element {
+    margin-left: 0;
+    margin-right: 1rem;
+}
+```
+
+### 13. Block Editor (Gutenberg) Styles
+
+```php
+// Editor styles
+function theme_editor_styles() {
+    add_theme_support('editor-styles');
+    add_editor_style('assets/css/editor-style.css');
+}
+add_action('after_setup_theme', 'theme_editor_styles');
+
+// Block styles
+function theme_block_styles() {
+    wp_enqueue_block_style('core/button', array(
+        'handle' => 'theme-button-style',
+        'src'    => get_template_directory_uri() . '/assets/css/blocks/button.css',
+    ));
+}
+add_action('init', 'theme_block_styles');
+```
+
+### 14. theme.json Integration
+
+```json
+{
+    "version": 2,
+    "settings": {
+        "color": {
+            "palette": [
+                { "slug": "primary", "color": "#2563eb", "name": "Primary" },
+                { "slug": "secondary", "color": "#64748b", "name": "Secondary" }
+            ]
+        },
+        "spacing": {
+            "units": ["px", "rem", "%"],
+            "spacingScale": { "steps": 7 }
+        },
+        "typography": {
+            "fontFamilies": [
+                { "slug": "system", "fontFamily": "system-ui, sans-serif", "name": "System" }
+            ]
+        }
+    }
+}
+```
+
+```css
+/* Use WordPress CSS variables from theme.json */
+.element {
+    color: var(--wp--preset--color--primary);
+    font-family: var(--wp--preset--font-family--system);
+    padding: var(--wp--preset--spacing--40);
+}
+```
+
+### 15. WordPress Admin Compatibility
+
+```css
+/* Match WordPress admin colors */
+.wp-admin .my-plugin-box {
+    background: #f0f0f1;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+}
+
+/* Use admin color scheme variables */
+.wp-admin .my-button {
+    background: var(--wp-admin-theme-color, #2271b1);
+    color: var(--wp-admin-theme-color-darker-10, #135e96);
+}
+
+/* Responsive admin */
+@media screen and (max-width: 782px) {
+    .wp-admin .my-plugin-box {
+        padding: 12px;
+    }
+}
+```
+
+### 16. WordPress CSS Best Practices
+
+- **Prefix classes** with theme/plugin slug to avoid conflicts
+- **Use `wp_add_inline_style()`** for dynamic CSS
+- **Avoid !important** - use specificity instead
+- **Support RTL** with logical properties or RTL stylesheet
+- **Test in Gutenberg** editor view
+- **Use theme.json** for design tokens when possible
+- **Minify for production** using build tools
