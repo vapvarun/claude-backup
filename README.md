@@ -1,10 +1,10 @@
 # Claude Code Skills Collection
 
-A comprehensive collection of Claude Code skills for web development agencies. Features WordPress development, frontend design, testing, marketing, and more.
+A comprehensive collection of 41 Claude Code skills for web development agencies. The ultimate skill directory covering WordPress, Laravel, PHP, frontend, backend, testing, security, DevOps, and marketing.
 
-## Available Skills (32 Total)
+## Available Skills (41 Total)
 
-### WordPress Development (8 skills)
+### WordPress & WooCommerce (9 skills)
 | Skill | Description |
 |-------|-------------|
 | **wp-performance-review** | Performance optimization and anti-pattern detection |
@@ -12,44 +12,57 @@ A comprehensive collection of Claude Code skills for web development agencies. F
 | **wp-gutenberg-blocks** | Gutenberg block development, FSE, theme.json |
 | **wp-theme-development** | Classic & block themes, template hierarchy |
 | **wp-plugin-development** | Plugin architecture, REST API, hooks system |
+| **woocommerce** | E-commerce: payment gateways, custom products, REST API |
 | **theme-development** | WordPress theme best practices |
 | **plugin-development** | WordPress plugin best practices |
 | **wordpress-gutenberg** | Block editor development |
 
-### Frontend & UI Development (6 skills)
+### PHP & Laravel (2 skills)
+| Skill | Description |
+|-------|-------------|
+| **php** | Modern PHP 8.x: OOP, type safety, testing, patterns |
+| **laravel** | Eloquent, Blade, Pest/PHPUnit, queues, caching |
+
+### Frontend & UI (7 skills)
 | Skill | Description |
 |-------|-------------|
 | **frontend-design** | Distinctive, production-grade UI design |
 | **react-component** | React components with TypeScript, hooks |
 | **css-styling** | Modern CSS, responsive design, animations |
 | **html-markup** | Semantic HTML5, accessibility |
+| **typescript** | TypeScript: generics, utility types, React patterns |
 | **web-artifacts-builder** | React + Tailwind + shadcn/ui components |
-| **theme-factory** | Theming toolkit for styling artifacts |
+| **theme-factory** | Theming toolkit with 10 pre-built themes |
 
-### Backend & API Development (2 skills)
+### Backend & API (4 skills)
 | Skill | Description |
 |-------|-------------|
 | **api-endpoint** | REST/GraphQL API development |
 | **javascript** | Modern JS/ES6+ best practices |
+| **graphql** | GraphQL: schemas, resolvers, Apollo Server |
+| **database** | Schema design, indexing, query optimization |
 
-### Testing & Quality (3 skills)
+### Testing & Quality (4 skills)
 | Skill | Description |
 |-------|-------------|
 | **webapp-testing** | Playwright browser testing for web apps |
 | **testing** | Unit, integration, and E2E testing |
 | **code-review** | Code review best practices |
+| **accessibility** | WCAG 2.1 AA compliance, ARIA, screen readers |
+
+### Security & DevOps (3 skills)
+| Skill | Description |
+|-------|-------------|
+| **security** | OWASP Top 10, auth, input validation, cryptography |
+| **devops** | Docker, CI/CD, deployment, monitoring |
+| **mcp-builder** | MCP server development guide |
 
 ### Development Tools (4 skills)
 | Skill | Description |
 |-------|-------------|
 | **bug-fix** | Systematic debugging approach |
 | **git-workflow** | Git best practices, commits, PRs |
-| **mcp-builder** | MCP server development guide |
 | **skill-creator** | Create new Claude Code skills |
-
-### Document Processing (2 skills)
-| Skill | Description |
-|-------|-------------|
 | **pdf** | PDF manipulation, extraction, creation |
 | **xlsx** | Excel spreadsheet creation and analysis |
 
@@ -75,15 +88,37 @@ cp -r skills/* ~/.claude/skills/
 Or copy specific categories:
 
 ```bash
-# WordPress skills
-cp -r skills/wp-* ~/.claude/skills/
+# WordPress & WooCommerce
+cp -r skills/wp-* skills/woocommerce ~/.claude/skills/
 
-# Frontend skills
-cp -r skills/frontend-design skills/react-component skills/css-styling ~/.claude/skills/
+# PHP & Laravel
+cp -r skills/php skills/laravel ~/.claude/skills/
 
-# Testing skills
-cp -r skills/webapp-testing skills/testing ~/.claude/skills/
+# Frontend
+cp -r skills/frontend-design skills/react-component skills/css-styling skills/typescript ~/.claude/skills/
+
+# Backend
+cp -r skills/api-endpoint skills/graphql skills/database ~/.claude/skills/
+
+# Security & DevOps
+cp -r skills/security skills/devops ~/.claude/skills/
+
+# Testing
+cp -r skills/webapp-testing skills/testing skills/accessibility ~/.claude/skills/
 ```
+
+## Skill Categories
+
+| Category | Count | Focus |
+|----------|-------|-------|
+| WordPress & WooCommerce | 9 | WordPress ecosystem, e-commerce |
+| PHP & Laravel | 2 | PHP frameworks and patterns |
+| Frontend & UI | 7 | React, CSS, TypeScript, design |
+| Backend & API | 4 | APIs, databases, server-side |
+| Testing & Quality | 4 | Testing, accessibility, code review |
+| Security & DevOps | 3 | Security, deployment, infrastructure |
+| Development Tools | 4 | Debugging, Git, utilities |
+| Content & Marketing | 7 | SEO, marketing, documentation |
 
 ## Skill Highlights
 
@@ -91,23 +126,38 @@ cp -r skills/webapp-testing skills/testing ~/.claude/skills/
 - 200+ code examples with BAD/GOOD patterns
 - WordPress Coding Standards compliance
 - OWASP Top 10 security mapping
-- Reference documentation for deep dives
-- Automatic trigger phrases for context detection
+- WooCommerce payment gateways & custom products
 
-### Frontend Design
-- Distinctive UI that avoids generic "AI slop" aesthetics
-- Typography, color theory, and motion guidelines
-- React + Tailwind + shadcn/ui integration
+### Laravel Skills
+- Eloquent relationships & eager loading
+- TDD with Pest/PHPUnit
+- Queues, caching, and performance
+- Form requests, policies, API resources
 
-### Testing
-- Playwright browser automation
-- Server lifecycle management
-- Screenshot capture and verification
+### Security Skills
+- OWASP Top 10 vulnerability prevention
+- JWT and OAuth 2.0 authentication
+- Input validation with Zod schemas
+- Security headers and CSRF protection
 
-### Document Processing
-- PDF extraction, merging, form filling
-- Excel spreadsheet with formulas and formatting
-- Data analysis and visualization
+### DevOps Skills
+- Docker multi-stage builds
+- GitHub Actions & GitLab CI/CD
+- Nginx configuration
+- Monitoring with Prometheus
+
+### Frontend Skills
+- TypeScript generics and utility types
+- React hooks with proper typing
+- WCAG 2.1 AA accessibility compliance
+- Modern CSS patterns and animations
+
+## Sources
+
+Skills curated and enhanced from:
+- [anthropics/skills](https://github.com/anthropics/skills) - Official Anthropic skills
+- [jpcaparas/superpowers-laravel](https://github.com/jpcaparas/superpowers-laravel) - Laravel patterns
+- [jeremylongshore/claude-code-plugins-plus](https://github.com/jeremylongshore/claude-code-plugins-plus) - Plugin marketplace
 
 ---
-*Last updated: 2025-12-20*
+*Last updated: 2025-12-20 | Total Skills: 41*
