@@ -11,10 +11,16 @@ claude-backup/
 │   ├── wp-plugin-development/
 │   ├── laravel/
 │   └── ...
+├── hooks/                   # Custom hooks (8 total)
+│   ├── wpcs-pre-commit.sh
+│   ├── session-memory.sh
+│   └── ...
 ├── plugins/                 # Custom plugins (if any)
 │   └── README.md
 └── installed-plugins.md     # Marketplace plugins to install
 ```
+
+> **Note:** Global `~/.claude/CLAUDE.md` is NOT backed up here (contains private project configs).
 
 ---
 
@@ -49,7 +55,20 @@ cp -r skills/* ~/.claude/skills/
 ls ~/.claude/skills/
 ```
 
-### 2. Install Plugins (From Marketplace)
+### 2. Install Hooks
+
+```bash
+# Create hooks directory if needed
+mkdir -p ~/.claude/hooks
+
+# Copy all hooks
+cp hooks/*.sh ~/.claude/hooks/
+
+# Make executable
+chmod +x ~/.claude/hooks/*.sh
+```
+
+### 3. Install Plugins (From Marketplace)
 
 ```bash
 # Official plugins
