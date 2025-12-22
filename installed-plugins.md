@@ -4,7 +4,7 @@
 
 Plugins are installed from marketplaces using `claude plugin install`. They provide slash commands, agents, and hooks.
 
-**Total: 20 plugins across 4 marketplaces**
+**Total: 18 plugins across 4 marketplaces**
 
 ---
 
@@ -15,19 +15,17 @@ Plugins are installed from marketplaces using `claude plugin install`. They prov
 claude plugin install document-skills@anthropic-agent-skills
 claude plugin install example-skills@anthropic-agent-skills
 
-# Claude Plugins Official (12 plugins)
+# Claude Plugins Official (10 plugins)
 claude plugin install code-review@claude-plugins-official
 claude plugin install commit-commands@claude-plugins-official
 claude plugin install feature-dev@claude-plugins-official
 claude plugin install frontend-design@claude-plugins-official
 claude plugin install hookify@claude-plugins-official
-claude plugin install laravel-boost@claude-plugins-official
 claude plugin install playwright@claude-plugins-official
 claude plugin install plugin-dev@claude-plugins-official
 claude plugin install pr-review-toolkit@claude-plugins-official
 claude plugin install ralph-wiggum@claude-plugins-official
 claude plugin install security-guidance@claude-plugins-official
-claude plugin install slack@claude-plugins-official
 
 # Claude Toolbox (2 plugins)
 claude plugin install cms-cultivator@claude-toolbox
@@ -51,7 +49,7 @@ claude plugin install fullstack-starter-pack@claude-code-plugins-plus
 | `document-skills` | PDF, DOCX, PPTX, XLSX manipulation |
 | `example-skills` | Reference implementations |
 
-### Claude Plugins Official (`@claude-plugins-official`) - 12 plugins
+### Claude Plugins Official (`@claude-plugins-official`) - 10 plugins
 
 | Plugin | Commands | Description |
 |--------|----------|-------------|
@@ -60,13 +58,11 @@ claude plugin install fullstack-starter-pack@claude-code-plugins-plus
 | `feature-dev` | `/feature-dev` | 7-phase feature development |
 | `frontend-design` | Frontend agents | Production-quality UI design |
 | `hookify` | Hook creation | Custom hooks to prevent unwanted behaviors |
-| `laravel-boost` | Laravel agents | Laravel development boost |
 | `playwright` | Browser testing | E2E browser automation testing |
 | `plugin-dev` | Plugin development | 8-phase workflow for building Claude Code plugins |
 | `pr-review-toolkit` | `/review-pr` | Specialized PR review agents |
 | `ralph-wiggum` | Autonomous iteration | Loops enabling Claude to work iteratively |
 | `security-guidance` | Security hooks | Security warnings on file edits |
-| `slack` | Slack integration | Team communication integration |
 
 ### Claude Toolbox (`@claude-toolbox`) - 2 plugins
 
@@ -106,7 +102,7 @@ claude plugin uninstall plugin-name@marketplace
 
 ## Web Agency Recommended Stack
 
-For WordPress/WooCommerce/Laravel web development agency:
+For WordPress/WooCommerce web development agency:
 
 | Plugin | Why |
 |--------|-----|
@@ -114,7 +110,6 @@ For WordPress/WooCommerce/Laravel web development agency:
 | `commit-commands` | Streamlined git workflow |
 | `feature-dev` | Structured feature development |
 | `hookify` | Enforce coding standards |
-| `laravel-boost` | Laravel project support |
 | `playwright` | E2E testing for client sites |
 | `pr-review-toolkit` | Thorough PR reviews |
 | `security-guidance` | Security checks |
