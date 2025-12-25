@@ -93,6 +93,22 @@ Scan for:
 - Missing URL validation before requests → WARNING: SSRF potential
 - `allow_redirects => true` with external URLs → WARNING: Open redirect
 
+### Cron & Scheduled Tasks
+Scan for:
+- Cron hook name same as internal `do_action()` in callback → CRITICAL: Infinite recursion (DoS)
+- `wp_schedule_event()` without `wp_next_scheduled()` check → WARNING: Duplicate events
+- Missing `wp_clear_scheduled_hook()` on deactivation → WARNING: Orphaned events
+- Long-running cron without `set_time_limit()` → WARNING: Timeout issues
+- Cron callbacks without try-catch → WARNING: Silent failures
+
+**Detection pattern for infinite recursion:**
+```php
+// Check if any cron hook name matches a do_action() call in its callback
+// Example: wp_schedule_event( time(), 'hourly', 'my_hook' );
+//          add_action( 'my_hook', 'callback' );
+//          function callback() { do_action( 'my_hook' ); } // INFINITE LOOP!
+```
+
 ## Search Patterns for Quick Detection
 
 ```bash
@@ -625,6 +641,9 @@ Structure findings as:
 | Nonce in GET request URL | Nonces can be logged/cached | Use POST for sensitive actions |
 | Capability check in view, not controller | Can be bypassed via direct request | Check in action handler |
 | Trusting `is_admin()` for security | Only checks context, not permissions | Use `current_user_can()` |
+| Cron hook name = internal action name | Infinite recursion, fatal error, DoS | Use different names: `my_cron` vs `my_do_cron` |
+| Not clearing cron on deactivation | Orphaned events continue running | Use `wp_clear_scheduled_hook()` |
+| Checkbox not in sanitize callback | Setting won't save when unchecked | Explicitly set `false` for missing checkbox |
 
 ## Deep-Dive References
 

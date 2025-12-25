@@ -285,6 +285,8 @@ What's done well:
 | Magic Numbers | Unclear constants | Named constants |
 | Callback Hell | Nested callbacks | async/await, Promises |
 | Tight Coupling | Hard to test/change | Dependency injection |
+| Hook Name Collision | Cron callback fires same hook (infinite recursion) | Use different names: cron hook vs internal action |
+| Self-Referencing Events | Event handler triggers itself | Add recursion guard or use distinct event names |
 
 ## Language-Specific Checks
 
@@ -311,6 +313,10 @@ What's done well:
 - [ ] Capability checks for actions
 - [ ] Prepared statements for queries
 - [ ] WordPress coding standards followed
+- [ ] **Cron hooks**: No name collision between cron hook and internal do_action()
+- [ ] **Cron scheduling**: Events scheduled on activation, cleared on deactivation
+- [ ] **Hook callbacks**: No recursive/self-triggering patterns
+- [ ] Settings sanitization handles unchecked checkboxes
 
 ### Python
 
