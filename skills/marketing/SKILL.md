@@ -5,6 +5,31 @@ description: Create comprehensive marketing content for themes, plugins, and web
 
 # Marketing Skill for Theme & Plugin Agency
 
+## Writing Style Guidelines
+
+### Tone & Voice (Non-Negotiable)
+
+**Be Human, Not AI:**
+- Write like a helpful colleague, not a marketing robot
+- Use natural language that sounds like a real person wrote it
+- Avoid buzzwords: "revolutionary", "game-changing", "seamless", "leverage", "synergy"
+- Skip filler words: "basically", "essentially", "simply", "just"
+- No excessive punctuation (!!!) or ALL CAPS for emphasis
+
+**Emoji Policy:**
+- Maximum ONE emoji per piece of content (or none)
+- Use only when it adds clarity, not decoration
+- Prefer text over emoji for important information
+
+**What to Avoid:**
+```
+❌ "🚀 This REVOLUTIONARY plugin will TRANSFORM your workflow!! 💥"
+✅ "This plugin handles form submissions automatically, so you can focus on your actual work."
+
+❌ "Simply leverage our seamless integration to unlock game-changing results!"
+✅ "Connect it to your email list in two clicks. New subscribers sync automatically."
+```
+
 ## Folder Structure
 
 When creating marketing content for a product, create this folder structure:
@@ -68,7 +93,7 @@ Before creating content, define 3-5 target personas in `07-brand-assets/persona-
 - What they want to achieve
 
 ### Pain Points
-- Problems they face
+- Problems they face (be specific, not generic)
 
 ### Why Product Appeals
 - Feature-to-benefit mapping
@@ -89,7 +114,8 @@ Lead with benefits, not features:
 ✅ "Stop spam automatically — so you can focus on growing your community"
 ```
 
-Use power words: effortless, powerful, stunning, seamless, instant, automatic
+**Power words to use wisely:** effortless, powerful, stunning, instant, automatic
+**Words to avoid:** revolutionary, game-changing, seamless, leverage, synergy, cutting-edge
 
 ### 3. Feature Highlights
 
@@ -99,17 +125,30 @@ Transform every feature into a benefit using:
 
 ```markdown
 **What It Does:**
-[Feature description]
+[Feature description - plain language]
 
 **The Benefit:**
-[Power word] + [outcome] — so you can [user benefit].
+[Outcome] — so you can [user benefit].
 
 **Why It Matters:**
 - [Feature detail], which means [benefit]
 - [Feature detail], so you can [benefit]
 ```
 
-### 4. Video Scripts
+### 4. Screenshots & Visuals
+
+**Requirements:**
+- Use real screenshots from local development environment
+- Show actual product UI, not mockups
+- Annotate with arrows or highlights for clarity
+- Crop to relevant area (no full-screen captures)
+- Ensure no sensitive data visible
+- Use consistent browser/window size
+
+**Before creating visual content, ask:**
+> "Do you have a local development setup where we can capture real screenshots? I'll need access to take authentic product images."
+
+### 5. Video Scripts
 
 Structure for each video:
 ```markdown
@@ -120,7 +159,7 @@ Structure for each video:
 
 ### INTRO (0:00 - 0:XX)
 **VISUAL:** [Description]
-**NARRATOR:** "[Script]"
+**NARRATOR:** "[Script - conversational, not salesy]"
 **ON-SCREEN TEXT:** "[Text overlay]"
 
 ### [SECTION NAME] (X:XX - X:XX)
@@ -128,23 +167,23 @@ Structure for each video:
 
 ## Production Notes
 - Visual style
-- Music suggestions
-- Screenshots needed
+- Music suggestions (upbeat but not overwhelming)
+- Screenshots needed (from local dev environment)
 ```
 
-### 5. Social Media (Separate Files Per Platform)
+### 6. Social Media (Separate Files Per Platform)
 
 **Twitter/X:** (`twitter-posts.md`)
 - Hook in first line
 - 1-2 key benefits
-- Emoji for visual breaks
+- One emoji maximum (or none)
 - Thread format for longer content
 
 **LinkedIn:** (`linkedin-posts.md`)
 - Professional tone
 - Problem → Solution format
 - Statistics and proof points
-- Thought leadership angle
+- No emoji or one maximum
 
 **Facebook:** (`facebook-posts.md`)
 - Community-focused
@@ -156,35 +195,29 @@ Structure for each video:
 - Short, punchy captions
 - Carousel/Reel ideas included
 
-### 6. Email Campaigns
+### 7. Email Campaigns
 
 Structure each email file with multiple templates:
 - Subject line variations (A/B test)
-- Full email body
-- CTA options
+- Full email body (human tone, not salesy)
+- CTA options (clear, action-oriented)
 
-### 7. Sales Materials
+### 8. Sales Materials
 
 **One-Pager:** Print-ready summary with:
-- Problem/Solution
-- Key features (3-5)
-- Results/Stats
+- Problem/Solution (lead with the problem they feel)
+- Key features (3-5 max)
+- Results/Stats (real numbers when possible)
 - Pricing
 - CTA
 
 **Objection Handling:** For each objection:
 - Understand (clarifying questions)
-- Acknowledge (validate concern)
+- Acknowledge (validate concern genuinely)
 - Address (provide information)
 - Confirm (check if resolved)
 
-**ROI Calculator:** Include:
-- Input variables
-- Calculation formulas
-- Result display templates
-- Comparison scenarios
-
-### 8. Pricing Messaging
+### 9. Pricing Messaging
 
 Always include accurate pricing from product page:
 ```markdown
@@ -195,27 +228,11 @@ Always include accurate pricing from product page:
 | Developer | $XX/yr | Unlimited |
 ```
 
-### Tone Guidelines
-
-- Confident but not arrogant
-- Helpful and solution-focused
-- Professional yet friendly
-- Direct without jargon
-- Use "you" more than "we"
-- Focus on outcomes, not outputs
-
-### SEO Considerations
-
-Include in `07-brand-assets/seo-keywords.md`:
-- Primary keywords (5-10)
-- Secondary keywords (10-20)
-- Long-tail keywords
-- Meta descriptions for each page type
-- Schema markup suggestions
-
-### Quality Checklist
+## Quality Checklist
 
 Before completing, verify:
+
+### Content Quality
 - [ ] Personas defined
 - [ ] All folders created
 - [ ] Pricing accurate
@@ -225,3 +242,16 @@ Before completing, verify:
 - [ ] Objection handling complete
 - [ ] README index updated
 
+### Tone Check
+- [ ] Human tone (not robotic/AI-sounding)
+- [ ] No excessive emojis (max 1 per piece)
+- [ ] No buzzwords (revolutionary, seamless, etc.)
+- [ ] No filler words (basically, simply, etc.)
+- [ ] Reads like a helpful colleague wrote it
+- [ ] Direct and respectful of reader's time
+
+### Visual Content
+- [ ] Screenshots requested from local dev environment
+- [ ] No stock photos where real product images should be
+- [ ] All visuals annotated clearly
+- [ ] No sensitive data visible

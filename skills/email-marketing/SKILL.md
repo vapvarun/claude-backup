@@ -5,6 +5,20 @@ description: Create email marketing campaigns including newsletters, drip sequen
 
 # Email Marketing Skill
 
+## Writing Style Guidelines
+
+**Be Human, Not AI:**
+- Write like you're emailing a colleague, not a marketing database
+- Use natural language that sounds like a real person
+- Avoid buzzwords: "revolutionary", "game-changing", "seamless", "leverage"
+- Skip filler words: "basically", "essentially", "simply", "just"
+
+**Emoji Policy:**
+- Maximum ONE emoji per email (in subject OR body, not both)
+- Use only when it genuinely helps (friendly greeting, celebration)
+- Never use emoji in serious/professional contexts
+- When in doubt, skip the emoji
+
 ## Instructions
 
 When creating email campaigns:
@@ -22,9 +36,10 @@ When creating email campaigns:
 **Best Practices:**
 - 30-50 characters ideal
 - Personalize when possible
-- Create urgency (carefully)
+- Create urgency (carefully, don't be manipulative)
 - A/B test always
 - Avoid spam triggers
+- No ALL CAPS or excessive punctuation
 
 **Preview Text:**
 - Extends the subject line
@@ -39,7 +54,7 @@ Subject: Welcome to [Brand] — Here's what's next
 
 Hi [Name],
 
-Welcome aboard! 🎉
+Welcome aboard!
 
 You're now part of [X,000] [customers/subscribers] who [benefit].
 
@@ -69,9 +84,9 @@ Hi [Name],
 Today, we're launching [Product] — and it's going to change how you [do thing].
 
 **What's new:**
-✓ [Feature 1] — [benefit]
-✓ [Feature 2] — [benefit]
-✓ [Feature 3] — [benefit]
+- [Feature 1] — [benefit]
+- [Feature 2] — [benefit]
+- [Feature 3] — [benefit]
 
 [CTA Button: Get [Product] Now]
 
@@ -86,19 +101,19 @@ Subject: [Newsletter Name] #[Number]: [Topic]
 
 Hey [Name],
 
-[Personal intro or timely hook — 2-3 sentences]
+[Personal intro or timely hook — 2-3 sentences, conversational]
 
 ---
 
-📌 **[Main Topic]**
+**[Main Topic]**
 
-[2-3 paragraphs of value]
+[2-3 paragraphs of value — write like you're explaining to a friend]
 
 [Key takeaway or action item]
 
 ---
 
-🔗 **Links Worth Clicking**
+**Links Worth Clicking**
 
 • [Link 1] — [Why it's useful]
 • [Link 2] — [Why it's useful]
@@ -106,7 +121,7 @@ Hey [Name],
 
 ---
 
-💡 **Quick Tip**
+**Quick Tip**
 
 [Actionable tip in 2-3 sentences]
 
@@ -121,7 +136,7 @@ P.S. [Teaser for next issue or CTA]
 
 **Abandoned Cart:**
 ```
-Subject: You left something behind...
+Subject: You left something behind
 
 Hi [Name],
 
@@ -168,7 +183,7 @@ If you'd like to unsubscribe, no hard feelings — just click below.
 4. Day 5: Success story/case study
 5. Day 7: Tips & tricks
 6. Day 10: Check-in + support
-7. Day 14: Upgrade/upsell
+7. Day 14: Upgrade/upsell (only if appropriate)
 
 **Nurture Sequence:**
 1. Value email (no pitch)
@@ -176,7 +191,7 @@ If you'd like to unsubscribe, no hard feelings — just click below.
 3. Value email (case study)
 4. Pitch email (offer)
 5. FAQ/objection handling
-6. Last chance
+6. Last chance (no pressure tactics)
 
 ### 4. Email Design Best Practices
 
@@ -196,7 +211,7 @@ If you'd like to unsubscribe, no hard feelings — just click below.
 - Alt text always
 - Compressed file sizes
 - Don't rely on images for key info
-- Use real photos over stock
+- Use real photos over stock when possible
 
 **CTAs:**
 - One primary CTA per email
@@ -216,7 +231,7 @@ If you'd like to unsubscribe, no hard feelings — just click below.
 
 **Avoid:**
 - Purchased lists
-- Spam trigger words
+- Spam trigger words (FREE!!!, Act Now!!!)
 - Too many images
 - Misleading subjects
 - Sending too frequently
@@ -239,3 +254,28 @@ If you'd like to unsubscribe, no hard feelings — just click below.
 - Email length
 - Personalization
 - From name
+
+## Quality Checklist
+
+Before sending, verify:
+
+### Content
+- [ ] Subject line is compelling (30-50 chars)
+- [ ] Preview text adds context
+- [ ] One clear CTA
+- [ ] Value before pitch
+- [ ] Unsubscribe link present
+
+### Tone
+- [ ] Human, conversational tone
+- [ ] No buzzwords or filler words
+- [ ] Maximum one emoji (if any)
+- [ ] Not salesy or pushy
+- [ ] Reads like a real person wrote it
+
+### Technical
+- [ ] Mobile responsive
+- [ ] Alt text on images
+- [ ] Links work
+- [ ] Personalization tokens correct
+- [ ] Tested in multiple email clients

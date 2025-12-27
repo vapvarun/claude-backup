@@ -5,6 +5,26 @@ description: Create social media content for Twitter/X, LinkedIn, Facebook, Inst
 
 # Social Media Marketing Skill
 
+## Writing Style Guidelines
+
+**Be Human, Not AI:**
+- Write like a real person, not a marketing bot
+- Use natural language and conversational tone
+- Avoid buzzwords: "revolutionary", "game-changing", "seamless", "leverage"
+- Skip filler words: "basically", "essentially", "simply", "just"
+
+**Emoji Policy:**
+- Maximum ONE emoji per post (or none)
+- Use only when it genuinely adds clarity or warmth
+- Never pile up emojis (no "Check this out! 🚀🔥💥🎉")
+- Professional platforms (LinkedIn): prefer no emoji
+
+**What to Avoid:**
+```
+❌ "🚀🔥 This GAME-CHANGING plugin will REVOLUTIONIZE your workflow!! 💥✨🎉"
+✅ "Tired of manually syncing your forms? This plugin does it automatically."
+```
+
 ## Instructions
 
 When creating social media content:
@@ -24,7 +44,7 @@ Call-to-action or question
 
 **Thread Format:**
 ```
-🧵 Thread: [Topic] - Everything you need to know
+Thread: [Topic] - Everything you need to know
 
 1/ Hook that promises value
 
@@ -40,10 +60,10 @@ Like & RT if helpful! Follow for more.
 ```
 
 **Engagement Tweets:**
-- Ask questions
-- Share hot takes
+- Ask genuine questions
+- Share honest takes (not hot takes for engagement)
 - Create polls
-- Reply to trends
+- Reply to trends (only if relevant)
 
 ### 2. LinkedIn Posts
 
@@ -51,19 +71,11 @@ Like & RT if helpful! Follow for more.
 ```
 Hook line (stops the scroll)
 
-↓
-
 Problem or pain point
-
-↓
 
 Story or insight (2-3 short paragraphs)
 
-↓
-
 Key takeaway or lesson
-
-↓
 
 Call-to-action + question for engagement
 
@@ -74,10 +86,10 @@ Call-to-action + question for engagement
 **Content Types:**
 - Personal stories with lessons
 - Industry insights and trends
-- How-to and tips
+- How-to and practical tips
 - Behind-the-scenes
-- Achievements (humble)
-- Controversial opinions
+- Achievements (genuine, not humble-brag)
+- Thoughtful opinions (not controversial for engagement)
 
 ### 3. Instagram
 
@@ -107,9 +119,9 @@ Call-to-action
 **Reels/Stories:**
 - Hook in first 3 seconds
 - Quick value delivery
-- Trending audio
-- Text overlays
-- Strong CTA at end
+- Trending audio (if appropriate)
+- Text overlays for accessibility
+- Clear CTA at end
 
 ### 4. Facebook
 
@@ -138,7 +150,7 @@ Call-to-action
 
 ### 6. Hashtag Strategy
 
-**Twitter:** 1-2 relevant hashtags
+**Twitter:** 1-2 relevant hashtags (less is more)
 **LinkedIn:** 3-5 industry hashtags
 **Instagram:** 20-30 mixed hashtags
   - 10 broad (1M+ posts)
@@ -149,17 +161,17 @@ Call-to-action
 
 **Boost Reach:**
 - Post consistently
-- Engage with others first
+- Engage with others first (genuinely, not for algorithm)
 - Reply to every comment
 - Use platform features (polls, lives)
 - Collaborate with others
 
 **Build Community:**
-- Ask questions
-- Share user content
-- Create inside jokes
+- Ask genuine questions
+- Share user content (with credit)
+- Be authentic and consistent
 - Celebrate followers
-- Be authentic
+- Respond like a human, not a brand
 
 ### 8. Analytics Focus
 
@@ -190,3 +202,27 @@ Track:
 - Best times: 11am-1pm, 7-9pm
 - Stories multiple times daily
 - Reels for growth
+
+## Quality Checklist
+
+Before posting, verify:
+
+### Content
+- [ ] Clear hook in first line
+- [ ] Value provided (not just promotion)
+- [ ] One clear CTA
+- [ ] Appropriate hashtags
+- [ ] Links work (if any)
+
+### Tone
+- [ ] Human, conversational tone
+- [ ] Maximum one emoji (if any)
+- [ ] No buzzwords or filler words
+- [ ] Not salesy or pushy
+- [ ] Authentic to brand voice
+
+### Visual (if applicable)
+- [ ] Real screenshots (not mockups)
+- [ ] Alt text for accessibility
+- [ ] No sensitive data visible
+- [ ] Properly sized for platform

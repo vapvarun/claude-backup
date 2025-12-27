@@ -7,6 +7,39 @@ description: Perform thorough code reviews focusing on security, performance, be
 
 Systematic code review methodology for identifying issues, security vulnerabilities, and optimization opportunities.
 
+## Team Review Guidelines
+
+### Communication Style
+
+When providing review feedback:
+
+1. **Be friendly and constructive**
+   - Good: "What do you think about using X here? It might help with Y."
+   - Good: "Nice solution! One small suggestion..."
+   - Avoid: "This is wrong."
+   - Avoid: "You should have done X."
+
+2. **Ask before assuming**
+   - Good: "I'm curious about this approach - could you explain the reasoning?"
+   - Avoid: "Why didn't you just...?"
+
+3. **Acknowledge good work**
+   - "Great catch on the edge case!"
+   - "Clean and readable!"
+   - "I learned something from this."
+
+### Double Verification Process
+
+Every PR requires TWO passes:
+
+**Pass 1 - Security (Blocking)**
+- All security checklist items MUST pass
+- Any security issue = Request Changes
+
+**Pass 2 - Quality (Advisory)**
+- Standards, performance, maintainability
+- These are suggestions, not blockers (unless severe)
+
 ## Review Phases
 
 ### Phase 1: Preparation
@@ -30,10 +63,10 @@ Work through each category methodically:
 
 ### Input Validation
 
-```javascript
+\`\`\`javascript
 // BAD: No validation
 app.post('/user', (req, res) => {
-  db.query(`SELECT * FROM users WHERE id = ${req.body.id}`);
+  db.query(\`SELECT * FROM users WHERE id = \${req.body.id}\`);
 });
 
 // GOOD: Parameterized + validated
@@ -42,11 +75,11 @@ app.post('/user', (req, res) => {
   const { id } = schema.parse(req.body);
   db.query('SELECT * FROM users WHERE id = ?', [id]);
 });
-```
+\`\`\`
 
 ### Authentication & Authorization
 
-```javascript
+\`\`\`javascript
 // BAD: Missing auth check
 app.delete('/api/posts/:id', async (req, res) => {
   await Post.findByIdAndDelete(req.params.id);
@@ -60,7 +93,7 @@ app.delete('/api/posts/:id', authenticate, async (req, res) => {
   }
   await post.delete();
 });
-```
+\`\`\`
 
 ### Security Checklist
 
@@ -77,7 +110,7 @@ app.delete('/api/posts/:id', authenticate, async (req, res) => {
 
 ### N+1 Query Detection
 
-```javascript
+\`\`\`javascript
 // BAD: N+1 queries
 const posts = await Post.find();
 for (const post of posts) {
@@ -86,22 +119,7 @@ for (const post of posts) {
 
 // GOOD: Eager loading
 const posts = await Post.find().populate('author');
-```
-
-### Memory & Resource Management
-
-```javascript
-// BAD: Memory leak - event listener not removed
-useEffect(() => {
-  window.addEventListener('resize', handleResize);
-}, []);
-
-// GOOD: Cleanup function
-useEffect(() => {
-  window.addEventListener('resize', handleResize);
-  return () => window.removeEventListener('resize', handleResize);
-}, []);
-```
+\`\`\`
 
 ### Performance Checklist
 
@@ -114,38 +132,7 @@ useEffect(() => {
 - [ ] Memory leaks prevented (cleanup handlers)
 - [ ] Heavy computations memoized or offloaded
 
-## Code Quality Review
-
-### Naming & Readability
-
-```javascript
-// BAD: Unclear names
-const d = new Date();
-const x = users.filter(u => u.a > 18);
-
-// GOOD: Descriptive names
-const currentDate = new Date();
-const adultUsers = users.filter(user => user.age > 18);
-```
-
-### Error Handling
-
-```javascript
-// BAD: Swallowed errors
-try {
-  await saveData();
-} catch (e) {}
-
-// GOOD: Proper error handling
-try {
-  await saveData();
-} catch (error) {
-  logger.error('Failed to save data', { error, context });
-  throw new AppError('Save failed', { cause: error });
-}
-```
-
-### Code Quality Checklist
+## Code Quality Checklist
 
 - [ ] Clear, descriptive naming conventions
 - [ ] Functions are single-purpose (< 30 lines ideal)
@@ -156,144 +143,71 @@ try {
 - [ ] Magic numbers/strings extracted to constants
 - [ ] Comments explain "why", not "what"
 
-## Design Patterns Review
+## Edge Cases Checklist
 
-### SOLID Principles
+Always verify these scenarios are handled:
 
-```javascript
-// BAD: Violates Single Responsibility
-class UserService {
-  async createUser(data) { /* ... */ }
-  async sendEmail(user) { /* ... */ }
-  async generateReport() { /* ... */ }
-}
+### Data Edge Cases
+- [ ] Empty arrays/collections
+- [ ] Null or undefined values
+- [ ] Zero values (especially in division)
+- [ ] Negative numbers where only positive expected
+- [ ] Empty strings vs null vs undefined
+- [ ] Unicode and special characters in strings
 
-// GOOD: Separated responsibilities
-class UserService {
-  async createUser(data) { /* ... */ }
-}
-class EmailService {
-  async sendEmail(user) { /* ... */ }
-}
-class ReportService {
-  async generateReport() { /* ... */ }
-}
-```
+### User Input Edge Cases
+- [ ] Missing required fields
+- [ ] Fields with only whitespace
+- [ ] Duplicate submissions (double-click)
+- [ ] Concurrent updates to same resource
+- [ ] Invalid date formats
+- [ ] Timezone handling
+- [ ] File upload with no file selected
 
-### Design Checklist
+### API Edge Cases
+- [ ] Network timeout handling
+- [ ] Rate limit exceeded responses
+- [ ] API returns unexpected data structure
+- [ ] Partial success in batch operations
+- [ ] Graceful degradation when service unavailable
 
-- [ ] Single Responsibility Principle followed
-- [ ] Open/Closed Principle (extensible without modification)
-- [ ] Dependencies injected, not hardcoded
-- [ ] Appropriate abstraction levels
-- [ ] Design patterns used correctly
-- [ ] No over-engineering for current requirements
-
-## Testing Review
-
-### Test Coverage
-
-```javascript
-// BAD: Only happy path
-it('creates user', async () => {
-  const user = await createUser({ name: 'John' });
-  expect(user.name).toBe('John');
-});
-
-// GOOD: Edge cases and errors
-describe('createUser', () => {
-  it('creates user with valid data', async () => {
-    const user = await createUser({ name: 'John', email: 'john@test.com' });
-    expect(user.name).toBe('John');
-  });
-
-  it('throws on duplicate email', async () => {
-    await createUser({ name: 'John', email: 'john@test.com' });
-    await expect(
-      createUser({ name: 'Jane', email: 'john@test.com' })
-    ).rejects.toThrow('Email already exists');
-  });
-
-  it('validates required fields', async () => {
-    await expect(createUser({})).rejects.toThrow('Name is required');
-  });
-});
-```
-
-### Testing Checklist
-
-- [ ] Unit tests for business logic
-- [ ] Integration tests for API endpoints
-- [ ] Edge cases covered
-- [ ] Error scenarios tested
-- [ ] Mocks used appropriately (not over-mocked)
-- [ ] Tests are deterministic (no flaky tests)
-- [ ] Test descriptions are clear
-
-## Documentation Review
-
-- [ ] Public APIs documented
-- [ ] Complex logic explained
-- [ ] README updated if needed
-- [ ] Breaking changes noted
-- [ ] Types/interfaces documented
-
-## Review Output Format
-
-Structure feedback as:
-
-### Critical Issues (Must Fix)
-
-Issues that block merging:
-- Security vulnerabilities
-- Data loss risks
-- Breaking changes without migration
-- Failing tests
-
-### Warnings (Should Fix)
-
-Issues that should be addressed:
-- Performance concerns
-- Code maintainability
-- Missing error handling
-- Incomplete tests
-
-### Suggestions (Nice to Have)
-
-Improvements for consideration:
-- Refactoring opportunities
-- Better naming
-- Additional documentation
-- Alternative approaches
-
-### Positive Notes
-
-What's done well:
-- Good patterns followed
-- Clean code
-- Thorough testing
-- Clear documentation
-
-## Common Anti-Patterns
-
-| Anti-Pattern | Problem | Better Approach |
-|--------------|---------|-----------------|
-| God Object | Class does too much | Split into focused classes |
-| Spaghetti Code | Unclear flow | Extract functions, use patterns |
-| Copy-Paste | Duplicated code | Extract shared utilities |
-| Premature Optimization | Complex without need | Keep simple, optimize when needed |
-| Magic Numbers | Unclear constants | Named constants |
-| Callback Hell | Nested callbacks | async/await, Promises |
-| Tight Coupling | Hard to test/change | Dependency injection |
-| Hook Name Collision | Cron callback fires same hook (infinite recursion) | Use different names: cron hook vs internal action |
-| Self-Referencing Events | Event handler triggers itself | Add recursion guard or use distinct event names |
+### WordPress-Specific Edge Cases
+- [ ] Post with no featured image
+- [ ] User with no display name
+- [ ] Taxonomy with no posts
+- [ ] Widget in empty sidebar
+- [ ] Shortcode with no attributes
+- [ ] Multisite subdirectory vs subdomain
+- [ ] Translation missing for locale
+- [ ] Cron job running during high traffic
+- [ ] Option not yet saved (first install)
+- [ ] Meta value of 0 vs meta not existing
+- [ ] get_post() returning null
+- [ ] WP_Query with no results
+- [ ] Current user not logged in (ID = 0)
 
 ## Language-Specific Checks
 
+### PHP/WordPress
+
+- [ ] Escaping output (esc_html, esc_attr, etc.)
+- [ ] Nonces for form submissions
+- [ ] Capability checks for actions
+- [ ] Prepared statements for queries
+- [ ] WordPress coding standards followed
+- [ ] Cron hooks: No name collision between cron hook and internal do_action()
+- [ ] Cron scheduling: Events scheduled on activation, cleared on deactivation
+- [ ] Hook callbacks: No recursive/self-triggering patterns
+- [ ] Settings sanitization handles unchecked checkboxes
+- [ ] Transient expiration set appropriately
+- [ ] Object cache checked before expensive queries
+- [ ] REST endpoints have permission_callback
+- [ ] AJAX handlers verify nonce and capability
+
 ### JavaScript/TypeScript
 
-- [ ] `===` used instead of `==`
-- [ ] Proper TypeScript types (no `any` abuse)
+- [ ] === used instead of ==
+- [ ] Proper TypeScript types (no any abuse)
 - [ ] async/await error handling
 - [ ] No prototype pollution risks
 - [ ] ESLint/Prettier rules followed
@@ -306,22 +220,27 @@ What's done well:
 - [ ] No state mutations
 - [ ] Proper component composition
 
-### PHP/WordPress
+## Review Output Format
 
-- [ ] Escaping output (esc_html, esc_attr, etc.)
-- [ ] Nonces for form submissions
-- [ ] Capability checks for actions
-- [ ] Prepared statements for queries
-- [ ] WordPress coding standards followed
-- [ ] **Cron hooks**: No name collision between cron hook and internal do_action()
-- [ ] **Cron scheduling**: Events scheduled on activation, cleared on deactivation
-- [ ] **Hook callbacks**: No recursive/self-triggering patterns
-- [ ] Settings sanitization handles unchecked checkboxes
+Structure feedback as:
 
-### Python
+### Critical Issues (Must Fix)
+- Security vulnerabilities
+- Data loss risks
+- Breaking changes without migration
+- Failing tests
 
-- [ ] Type hints used
-- [ ] Context managers for resources
-- [ ] Exception handling specific
-- [ ] PEP 8 followed
-- [ ] Requirements pinned
+### Warnings (Should Fix)
+- Performance concerns
+- Code maintainability
+- Missing error handling
+
+### Suggestions (Nice to Have)
+- Refactoring opportunities
+- Better naming
+- Additional documentation
+
+### Positive Notes
+- Good patterns followed
+- Clean code
+- Thorough testing
