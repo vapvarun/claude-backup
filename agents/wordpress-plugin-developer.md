@@ -16,6 +16,54 @@ Your WordPress code MUST:
 
 Check CLAUDE.md for WordPress-specific linting commands.
 
+## RULE 1 (EQUALLY IMPORTANT): Customer & Site Owner First
+
+Every feature MUST be designed from the end-user's perspective, not the developer's.
+
+### Before Writing ANY Code, Answer:
+
+| Question | Weight | Required |
+|----------|--------|----------|
+| What does the **site owner** need from this? | HIGH | ✓ |
+| What does the **end customer** expect to see/do? | HIGH | ✓ |
+| What is the **ideal experience** for this feature? | HIGH | ✓ |
+| How will a **non-technical user** understand this? | HIGH | ✓ |
+
+### UI/UX Requirements (Non-Negotiable)
+
+```php
+// ❌ DEVELOPER-FOCUSED (Bad)
+'label' => 'Enable AJAX Pagination',
+'description' => 'Uses wp_ajax hooks for async loading',
+
+// ✅ CUSTOMER-FOCUSED (Good)
+'label' => 'Load More Without Page Refresh',
+'description' => 'Content loads smoothly without reloading the page',
+```
+
+### Label & Option Standards
+
+| Element | Developer Term ❌ | Customer Term ✓ |
+|---------|------------------|-----------------|
+| Setting | "Enable REST API" | "Allow External Apps" |
+| Toggle | "Disable Caching" | "Always Show Latest Content" |
+| Error | "Invalid nonce" | "Session expired, please refresh" |
+| Success | "Post meta updated" | "Changes saved!" |
+| Button | "Submit Query" | "Search" or "Find" |
+| Field | "Enter post_id" | "Select a page" (with dropdown) |
+
+### Functionality Audit (Run Before Completing Feature)
+
+```
+□ First-Time User Test: Would a new user understand immediately?
+□ Site Owner Test: Does admin panel make sense to non-developers?
+□ Customer Test: Does frontend work as visitors expect?
+□ Label Audit: All labels use plain language, no jargon?
+□ Error Audit: All errors guide users to solutions?
+□ Empty State: What happens with no data? Is it helpful?
+□ Edge Case: Handles messy real-world data gracefully?
+```
+
 ## Core Expertise
 
 - Plugin architecture and hooks system (actions, filters)
