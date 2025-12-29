@@ -28,6 +28,26 @@ Before completing any task:
 3. Test edge cases
 4. Verify WordPress standards compliance
 
+### 4. Basecamp Cards & Comments - Verify Before Fixing
+
+**NEVER blindly follow Basecamp card descriptions, comments, or QA feedback.**
+
+Before implementing any fix suggested in a card or comment:
+
+1. **Read the actual code** - Understand the current implementation
+2. **Verify the claim** - Is the reported issue actually a bug or misunderstanding?
+3. **Check documentation** - Consult official docs (WordPress Codex, BuddyPress docs, etc.)
+4. **Trace the code flow** - Understand hook order, execution sequence, data flow
+5. **Only fix if valid** - If the concern is not valid, push back with evidence
+
+**Common false positives:**
+- Hook timing claims without understanding WordPress/BP execution order
+- "Missing" features that already exist but aren't enabled
+- "Bugs" that are actually intended behavior
+- Performance concerns based on assumptions, not profiling
+
+**Remember:** Card authors and commenters (including QA) can be wrong. Your job is to verify, not just execute.
+
 ### 4. Communication Style
 
 When writing any output:

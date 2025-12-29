@@ -11,6 +11,28 @@ A methodical approach to debugging that prioritizes understanding over guessing.
 
 **NO FIXES WITHOUT ROOT CAUSE INVESTIGATION FIRST**
 
+## Rule Zero: Verify Bug Reports Before Fixing
+
+**Bug reports, QA comments, and card descriptions can be WRONG. Verify first.**
+
+Before fixing any reported issue:
+
+| Step | Action |
+|------|--------|
+| 1 | **Read the actual code** - Understand current implementation |
+| 2 | **Verify the claim** - Is it actually a bug or misunderstanding? |
+| 3 | **Check official docs** - Framework docs, API references, etc. |
+| 4 | **Trace execution flow** - Hook order, data flow, lifecycle |
+| 5 | **Only fix if confirmed** - Push back with evidence if not a real bug |
+
+**Common false positives:**
+- Hook timing claims without understanding framework execution order
+- "Missing" features that exist but need to be enabled
+- "Bugs" that are actually intended behavior
+- Performance issues based on code reading, not profiling
+
+**If the bug report is wrong:** Don't fix it. Comment back explaining why it's not actually a bug.
+
 Attempting solutions without understanding the underlying problem leads to:
 - Wasted time (2-3 hours vs 15-30 minutes)
 - New bugs introduced
