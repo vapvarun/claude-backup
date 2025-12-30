@@ -126,6 +126,50 @@ Read:
 Read:
 - `references/common-mistakes.md`
 
+## WordPress 6.9 Performance Improvements
+
+Be aware of these 6.9 changes when profiling:
+
+**On-demand CSS for classic themes:**
+- Classic themes now get on-demand CSS loading (previously only block themes)
+- Reduces CSS payload by 30-65% by only loading styles for blocks actually used
+- If profiling a classic theme, this should already be helping
+
+**Block themes with no render-blocking resources:**
+- Block themes without custom stylesheets (like Twenty Twenty-Three/Four) can now load with zero render-blocking CSS
+- Styles come from global styles (theme.json) and separate block styles, all inlined
+- Significantly improves LCP (Largest Contentful Paint)
+
+**Inline CSS limit increased:**
+- The threshold for inlining small stylesheets has been raised
+- Reduces render-blocking resources
+
+## WP-CLI Profiling Commands
+
+If WP-CLI is available, use these for deep profiling:
+
+```bash
+# See where time goes (bootstrap/main_query/template)
+wp profile stage --url=https://example.com/page/
+
+# Find slow hooks/callbacks
+wp profile hook --url=https://example.com/page/
+
+# Profile specific code path
+wp profile eval 'do_action("init");'
+
+# Run health checks
+wp doctor check
+```
+
+## Query Monitor Headless Usage
+
+For backend-only debugging, Query Monitor works via REST API:
+
+1. Authenticate (nonce or Application Password)
+2. Request with `?_envelope` parameter
+3. Inspect `x-qm-*` headers or `qm` property in response
+
 ## Escalation
 
 - If production and no explicit approval, do NOT: install plugins, enable `SAVEQUERIES`, run load tests, or flush caches during traffic
@@ -134,3 +178,4 @@ Read:
 Consult:
 - [WordPress Performance Team Handbook](https://make.wordpress.org/performance/)
 - [Query Monitor Plugin](https://querymonitor.com/)
+- [WP 6.9 Frontend Performance Field Guide](https://make.wordpress.org/core/2025/11/18/wordpress-6-9-frontend-performance-field-guide/)

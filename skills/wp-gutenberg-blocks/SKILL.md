@@ -49,7 +49,23 @@ Read:
 
 WordPress 6.9 enforces `apiVersion: 3` in block.json schema. Blocks with apiVersion 2 or lower trigger console warnings when `SCRIPT_DEBUG` is enabled.
 
-**Why:** WordPress 7.0 will run the post editor in an iframe regardless of apiVersion.
+**Why this matters:**
+- WordPress 7.0 will run the post editor in an iframe regardless of block apiVersion
+- apiVersion 3 ensures your block works correctly inside the iframed editor (style isolation, viewport units, media queries)
+
+**Migration from apiVersion 2:**
+1. Update the `apiVersion` field in `block.json` to `3`
+2. Test in a local environment with the iframe editor enabled
+3. Ensure any style handles are included in `block.json` (styles missing from the iframe won't apply)
+4. Third-party scripts attached to a specific `window` may have scoping issues
+
+```json
+{
+  "apiVersion": 3,
+  "name": "my-plugin/my-block",
+  "...": "..."
+}
+```
 
 Read:
 - `references/block-json.md`
@@ -59,6 +75,27 @@ Read:
 - **Static block** (markup saved into post content): implement `save()`
 - **Dynamic block** (server-rendered): use `render` in `block.json` and keep `save()` minimal or `null`
 - **Interactive frontend**: use `viewScriptModule` for modern module-based view scripts
+
+**viewScript vs viewScriptModule:**
+
+| Property | `viewScript` | `viewScriptModule` |
+|----------|--------------|-------------------|
+| Module type | Classic script | ES Module |
+| Loading | Synchronous | Async/deferred |
+| Use for | Legacy/compatibility | Interactivity API, modern JS |
+| Dependencies | Manual registration | Import statements |
+
+```json
+{
+  "viewScript": "file:./view.js",
+  "viewScriptModule": "file:./view.js"
+}
+```
+
+Prefer `viewScriptModule` for:
+- Interactivity API (`@wordpress/interactivity`)
+- Modern ES module imports
+- Better performance (deferred loading)
 
 ### 4) Update block.json safely
 
