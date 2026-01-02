@@ -1,0 +1,9 @@
+# Personal/Private - Not synced to remote
+agents/autovap/
+agents/autovap.md
+agents/AUTOVAP_*.md
+agents/DOCUMENTATION_SETUP.md
+agents/DOC_PREPARATION_PLAN.md
+skills/autovap/
+hooks/autovap-dashboard.sh
+mcp-servers/
