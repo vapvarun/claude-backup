@@ -23,30 +23,37 @@ def discover_admin_tabs(page):
     """Discover all admin tabs in the plugin settings page."""
     tabs = []
 
-    # Common tab wrapper selectors
+    # Common tab wrapper selectors (ordered by specificity)
     tab_selectors = [
-        ".nav-tab-wrapper li a.nav-tab",           # Wbcom style
+        ".nav-tab-wrapper ul li a.nav-tab",        # Wbcom style (ul > li > a)
+        ".nav-tab-wrapper li a.nav-tab",           # Wbcom style (li > a)
         ".nav-tab-wrapper a.nav-tab",              # Standard WP style
         ".wp-tab-bar li a",                        # WP tab bar
         ".settings-tabs li a",                     # Generic settings tabs
         "[role='tablist'] [role='tab']",           # ARIA tabs
+        ".nav-tab",                                # Fallback - any nav-tab
     ]
 
     for selector in tab_selectors:
         try:
             elements = page.locator(selector).all()
+            print(f"    Trying: {selector} → {len(elements)} matches")
+
             if elements:
                 for el in elements:
                     tab_id = None
                     tab_name = el.text_content().strip()
 
-                    # Try to get tab ID from parent li or href
+                    # Try to get tab ID from parent li
                     try:
                         parent = el.locator("xpath=..")
-                        tab_id = parent.get_attribute("id")
+                        parent_id = parent.get_attribute("id")
+                        if parent_id:
+                            tab_id = parent_id
                     except:
                         pass
 
+                    # Try href parameter
                     if not tab_id:
                         href = el.get_attribute("href") or ""
                         if "tab=" in href:
@@ -54,16 +61,24 @@ def discover_admin_tabs(page):
                         elif "#" in href:
                             tab_id = href.split("#")[-1]
 
+                    # Try element's own ID
+                    if not tab_id:
+                        tab_id = el.get_attribute("id")
+
                     if tab_name and tab_id:
-                        tabs.append({
-                            "id": tab_id,
-                            "name": tab_name,
-                            "selector": selector,
-                        })
+                        # Avoid duplicates
+                        if not any(t["id"] == tab_id for t in tabs):
+                            tabs.append({
+                                "id": tab_id,
+                                "name": tab_name,
+                                "selector": selector,
+                            })
 
                 if tabs:
+                    print(f"    ✓ Found {len(tabs)} tabs using: {selector}")
                     break
         except Exception as e:
+            print(f"    Error with {selector}: {e}")
             continue
 
     return tabs
