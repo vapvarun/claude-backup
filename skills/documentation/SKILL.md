@@ -483,6 +483,120 @@ python3 docs/tools/capture-screenshots.py
 
 ---
 
+## Plugin Discovery Workflow (Recommended)
+
+**Don't hardcode plugin-specific values.** Use the discovery script to auto-detect plugin structure first.
+
+### Two-Step Workflow
+
+```
+Step 1: DISCOVER → What tabs, dropdowns, and settings does this plugin have?
+Step 2: GENERATE → Create a capture script based on discovered structure
+```
+
+### Step 1: Run Discovery Script
+
+```bash
+# Navigate to skill templates
+cd ~/.claude/skills/documentation/templates
+
+# Run discovery on your plugin
+python3 discover-plugin.py \
+    --url http://your-site.local \
+    --page your-plugin-slug \
+    --plugin-path /path/to/your/plugin \
+    --output /path/to/plugin/docs/tools/capture-screenshots.py
+```
+
+**What it discovers:**
+- All admin tabs (tries multiple selector patterns)
+- Form elements (dropdowns, checkboxes, buttons)
+- Editor dropdowns and their options
+- Tab structure and IDs
+
+**Example output:**
+```
+============================================================
+PLUGIN STRUCTURE DISCOVERY
+============================================================
+
+Site: http://member-blog.local
+Admin Page: bp-member-blog
+
+--- Discovering tabs ---
+Found 7 tabs:
+  - overview: Overview
+  - pages: Pages
+  - editor: Editor
+  - post_settings: Post Settings
+  - access_control: Access Control
+  - taxonomies: Taxonomies
+  - misc: Misc
+
+--- Analyzing each tab ---
+  Tab: Editor (editor)
+    Dropdowns: 2
+    Checkboxes: 5
+    >> EDITOR FOUND: #bp_member_blog_editor_type (3 options)
+       - editorjs: Editor.js
+       - medium: Medium Editor
+       - classic: Classic Editor
+```
+
+### Step 2: Review and Customize Generated Script
+
+The discovery script generates a ready-to-use capture script:
+
+```python
+# Auto-generated configuration (customize as needed)
+ADMIN_TABS = [
+    {"id": "overview", "name": "Overview", "file": "admin-overview-tab.png"},
+    {"id": "pages", "name": "Pages", "file": "admin-pages-tab.png"},
+    {"id": "editor", "name": "Editor", "file": "admin-editor-tab.png"},
+    # ... discovered tabs
+]
+
+EDITOR_CONFIG = {
+    "tab": "editor",
+    "selector": "#bp_member_blog_editor_type",  # Auto-discovered!
+    "form_url": "/add-new-post/",
+}
+
+EDITOR_TYPES = [
+    {"type": "editorjs", "filename": "frontend-form-editorjs.png"},
+    {"type": "medium", "filename": "frontend-form-medium.png"},
+    {"type": "classic", "filename": "frontend-form-classic.png"},
+]
+```
+
+### Why Discovery-Based Approach
+
+| Hardcoded Approach | Discovery Approach |
+|-------------------|-------------------|
+| ❌ `select[name='bp_member_blog_editor_type']` | ✅ Auto-detects selector name |
+| ❌ Assumes 7 tabs exist | ✅ Counts actual tabs |
+| ❌ Guesses dropdown options | ✅ Reads real option values |
+| ❌ Breaks on different plugins | ✅ Works with any WP plugin |
+
+### Prerequisites
+
+Before running discovery:
+
+1. **Install mu-plugin for auto-login:**
+   ```bash
+   cp ~/.claude/skills/documentation/templates/mu-auto-login.php \
+      /path/to/wp-content/mu-plugins/
+   ```
+
+2. **Install Playwright:**
+   ```bash
+   pip install playwright && playwright install chromium
+   ```
+
+3. **Plugin must be active** in your local WordPress
+
+---
+
 ## Project-Specific Screenshot Scripts
 
 **Save capture scripts inside each plugin/theme project** for reusability and version control.
@@ -651,13 +765,14 @@ This skill includes reusable configs and templates in the skill directory.
 ### Location
 ```
 ~/.claude/skills/documentation/
-├── skill.md              # This file
+├── SKILL.md              # This file
 ├── configs/
 │   ├── sites.yaml        # WordPress sites registry (all your dev sites)
 │   └── roles.yaml        # User roles with IDs (no passwords!)
 └── templates/
     ├── mu-auto-login.php        # MU-plugin for auto-login (install first!)
-    └── capture-screenshots.py   # Screenshot capture script template
+    ├── discover-plugin.py       # STEP 1: Auto-discover plugin structure
+    └── capture-screenshots.py   # STEP 2: Screenshot capture template
 ```
 
 ### sites.yaml - Site Registry
