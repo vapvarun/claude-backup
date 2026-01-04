@@ -483,6 +483,167 @@ python3 docs/tools/capture-screenshots.py
 
 ---
 
+## Project-Specific Screenshot Scripts
+
+**Save capture scripts inside each plugin/theme project** for reusability and version control.
+
+### Why Save in Project
+
+| Location | Purpose |
+|----------|---------|
+| `~/.claude/skills/documentation/templates/` | **Template** - Generic starting point |
+| `plugin/docs/tools/capture-screenshots.py` | **Project script** - Customized, reusable |
+| `plugin/docs/tools/annotate-screenshots.js` | **Annotation script** - Uses MCP to annotate |
+
+Benefits:
+- **Reusable** - Run again after UI changes without recreating
+- **Version controlled** - Track changes with plugin code
+- **Team shareable** - Other developers can capture same screenshots
+- **Improvable** - Refine selectors and annotations over time
+
+### Standard Project Structure
+
+```
+plugin/
+├── docs/
+│   ├── images/                    # Final screenshots (commit these)
+│   │   ├── admin-settings.png
+│   │   ├── admin-settings-annotated.png
+│   │   └── ...
+│   ├── tools/                     # Capture scripts (commit these)
+│   │   ├── capture-screenshots.py # Main capture script
+│   │   └── annotate-screenshots.js # Optional: batch annotation
+│   ├── README.md
+│   └── ...other docs...
+└── ...plugin files...
+```
+
+### Capture Script Template
+
+When starting documentation for a new plugin, create `docs/tools/capture-screenshots.py`:
+
+```python
+#!/usr/bin/env python3
+"""
+Screenshot capture for [PLUGIN_NAME] documentation.
+Updates: Just run this script again after UI changes.
+"""
+
+from playwright.sync_api import sync_playwright
+import time
+import os
+import json
+
+# =============================================================================
+# CONFIGURATION - Update these for your project
+# =============================================================================
+SITE_CONFIG = {
+    "url": "http://your-site.local",           # Your local WordPress URL
+    "plugin_slug": "your-plugin-name",          # Plugin admin page slug
+    "plugin_path": "/path/to/plugin",           # Absolute path to plugin
+}
+
+ADMIN_USER_ID = 1  # Admin user ID for auto-login
+
+IMAGES_DIR = f"{SITE_CONFIG['plugin_path']}/docs/images"
+METADATA_DIR = f"/tmp/screenshot-metadata-{SITE_CONFIG['plugin_slug']}"
+
+# =============================================================================
+# ADMIN TABS - Define your plugin's settings tabs
+# =============================================================================
+ADMIN_TABS = [
+    {"id": "general", "file": "admin-general.png"},
+    {"id": "settings", "file": "admin-settings.png"},
+    # Add more tabs as needed
+]
+
+# =============================================================================
+# FRONTEND PAGES - Member-facing pages to capture
+# =============================================================================
+FRONTEND_PAGES = [
+    {"url": "/dashboard/", "file": "frontend-dashboard.png", "full_page": True},
+    # Add more pages
+]
+
+# ... rest of capture functions (copy from template)
+```
+
+### When to Update Project Scripts
+
+**Update `capture-screenshots.py` when:**
+- Adding new admin tabs/pages
+- Changing settings page structure
+- Adding new frontend features
+- UI redesign
+
+**Re-run without changes when:**
+- Text/label changes only
+- Minor styling updates
+- Screenshots need refresh for new release
+
+### Annotation Workflow with Project Scripts
+
+After capture, the script generates metadata in `/tmp/screenshot-metadata-{plugin}/`. Run annotation:
+
+```bash
+# Using the project's annotation script (if exists)
+node docs/tools/annotate-screenshots.js
+
+# Or ask Claude to annotate using Image Annotator MCP:
+# "Annotate screenshots using metadata in /tmp/screenshot-metadata-myplugin/"
+```
+
+### Example: Member Blog Plugin Structure
+
+Real-world example from BuddyPress Member Blog:
+
+```
+buddypress-member-blog/
+├── docs/
+│   ├── images/
+│   │   ├── admin-overview-tab.png
+│   │   ├── admin-overview-tab-annotated.png
+│   │   ├── admin-pages-tab.png
+│   │   ├── frontend-dashboard.png
+│   │   └── ...
+│   ├── tools/
+│   │   ├── capture-screenshots.py    # Captures 19 screenshots
+│   │   └── annotate-screenshots.js   # Annotates with markers/boxes
+│   ├── getting-started.md
+│   └── admin-settings.md
+```
+
+The capture script defines:
+- 7 FREE plugin admin tabs
+- 9 PRO plugin admin tabs
+- 3 editor types (Editor.js, Medium, Classic)
+- Frontend dashboard and profile pages
+- Annotations for key UI elements
+
+### Sharing Between Free/Pro Plugins
+
+For plugins with free and pro versions, use a single capture script that handles both:
+
+```python
+# Paths
+FREE_IMAGES = f"{PLUGIN_DIR}/docs/images"
+PRO_IMAGES = f"{PRO_PLUGIN_DIR}/docs/images"
+
+# FREE tabs
+FREE_TABS = [
+    {"id": "general", "file": "admin-general.png"},
+    {"id": "pages", "file": "admin-pages.png"},
+]
+
+# PRO tabs (only visible when Pro active)
+PRO_TABS = [
+    {"id": "custom-fields", "file": "admin-custom-fields.png"},
+    {"id": "restrictions", "file": "admin-restrictions.png"},
+]
+```
+
+---
+
 ## Skill Resources
 
 This skill includes reusable configs and templates in the skill directory.

@@ -141,7 +141,14 @@ FRONTEND_PAGES = [
     # },
 ]
 
-# Editor type variations
+# Editor type variations (if plugin has multiple editors)
+# Set editor_tab and editor_selector for your plugin
+EDITOR_CONFIG = {
+    "tab": "editor",                           # Tab ID with editor settings
+    "selector": "select[name*='editor']",      # CSS selector for editor dropdown
+    "form_url": "/add-new-post/",              # Frontend form URL to capture
+}
+
 EDITOR_TYPES = [
     # {"type": "editorjs", "filename": "form-editorjs.png", "annotations": [...]},
     # {"type": "medium", "filename": "form-medium.png", "annotations": [...]},
@@ -602,17 +609,26 @@ def navigate_and_capture(page, url, filename, full_page=False, wait_time=WAIT_TI
         return None
 
 
-def set_editor_type(page, editor_type):
-    """Change editor type in plugin settings."""
+def set_editor_type(page, editor_type, editor_tab="editor", editor_selector="select[name*='editor']"):
+    """
+    Change editor type in plugin settings.
+
+    Args:
+        page: Playwright page object
+        editor_type: Value to select (e.g., "editorjs", "medium", "classic")
+        editor_tab: Tab ID containing editor settings (default: "editor")
+        editor_selector: CSS selector for editor dropdown (default: generic selector)
+    """
     print(f"  Setting editor to: {editor_type}")
     page.goto(f"{SITE_CONFIG['url']}/wp-admin/admin.php?page={SITE_CONFIG['plugin_page']}")
     page.wait_for_load_state('networkidle')
     time.sleep(1)
 
-    click_plugin_tab(page, "editor")
+    if editor_tab:
+        click_plugin_tab(page, editor_tab)
 
     try:
-        page.select_option("select#bp_member_blog_editor_type", editor_type)
+        page.select_option(editor_selector, editor_type)
         time.sleep(0.5)
         page.locator("input[type='submit']").click()
         page.wait_for_load_state('networkidle')
@@ -687,12 +703,18 @@ def capture_editor_variations(page):
         return
 
     print("\n=== Editor Type Screenshots ===\n")
+
+    # Get editor config (use defaults if not defined)
+    editor_tab = EDITOR_CONFIG.get("tab", "editor")
+    editor_selector = EDITOR_CONFIG.get("selector", "select[name*='editor']")
+    form_url = EDITOR_CONFIG.get("form_url", "/add-new-post/")
+
     for editor in EDITOR_TYPES:
         print(f"\n--- {editor['type']} editor ---")
-        set_editor_type(page, editor['type'])
+        set_editor_type(page, editor['type'], editor_tab, editor_selector)
         navigate_and_capture(
             page,
-            "/add-new-post/",
+            form_url,
             editor['filename'],
             full_page=True,
             annotations=editor.get('annotations', [])
