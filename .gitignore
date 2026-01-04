@@ -7,3 +7,7 @@ agents/DOC_PREPARATION_PLAN.md
 skills/autovap/
 hooks/autovap-dashboard.sh
 mcp-servers/
+node_modules/
+cache/
+logs/
+.env

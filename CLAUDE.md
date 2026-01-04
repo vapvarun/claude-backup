@@ -222,6 +222,50 @@ Project ID: `44836778`
 
 ---
 
+## WP Blog MCP Server - Blog Publishing Workflow
+
+**Location:** `~/.mcp-servers/wp-blog-mcp-server/`
+**Full Workflow:** See `CLAUDE-WORKFLOW.md` in that directory.
+
+### MANDATORY: Follow the Checklists
+
+When creating blog posts, ALWAYS follow the workflow in order:
+
+#### Phase 1: Pre-Publish Checklist
+1. **Content**: 2000+ words, Gutenberg blocks, proper headings
+2. **Images**: Upload content images with alt text
+3. **Tags**: Run `suggest_tags` → create/assign 3-5 tags
+4. **Internal Links**: Run `suggest_internal_links` → add 2+ links
+5. **Featured Image**: Upload and set with `media_set_featured`
+6. **Audit**: Run `audit_pre_publish` - ALL checks must pass
+7. **Publish**: Use `post_publish_safe` only after audit passes
+
+#### Phase 2: Post-Publish Checklist (Social Media)
+1. **Generate**: Run `social_generate` for all platforms
+2. **Assets**: Run `social_generate_assets` for platform images
+3. **Review**: Check content for each platform
+4. **Export**: Run `social_export` for scheduling tools
+
+### Tool Order Quick Reference
+```
+Pre-Publish:
+post_create → suggest_tags → tag_create → suggest_internal_links →
+post_update → media_set_featured → audit_pre_publish → post_publish_safe
+
+Post-Publish:
+social_generate → social_generate_assets → social_list → social_export
+```
+
+### Our Standards (Higher than Defaults)
+| Check | Default | Our Standard |
+|-------|---------|--------------|
+| Word Count | 300 | **2000+** |
+| Tags | 1 | **3-5** |
+| Internal Links | 2 | **2-3** |
+| SEO Score | 70 | **80+** |
+
+---
+
 ## Basecamp Formatting
 
 **IMPORTANT:** Always use HTML tags for formatting in Basecamp comments and descriptions.
