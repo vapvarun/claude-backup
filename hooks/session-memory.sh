@@ -33,6 +33,15 @@ if git rev-parse --git-dir > /dev/null 2>&1; then
     log_message "Git context: repo=$GIT_REPO, branch=$GIT_BRANCH"
 fi
 
+# Calculate session duration
+SESSION_DURATION=0
+if [ -f /tmp/claude_session_start.txt ]; then
+    START_TIME=$(cat /tmp/claude_session_start.txt)
+    NOW=$(date +%s)
+    SESSION_DURATION=$((NOW - START_TIME))
+    log_message "Session duration: ${SESSION_DURATION} seconds"
+fi
+
 # Collect session data
 SESSION_DATA=$(cat <<EOF
 {
@@ -42,7 +51,8 @@ SESSION_DATA=$(cat <<EOF
     "git_branch": "$GIT_BRANCH",
     "git_repo": "$GIT_REPO",
     "hook_type": "${CLAUDE_HOOK_TYPE:-session_end}",
-    "session_id": "${CLAUDE_SESSION_ID:-unknown}"
+    "session_id": "${CLAUDE_SESSION_ID:-unknown}",
+    "session_duration": $SESSION_DURATION
 }
 EOF
 )
