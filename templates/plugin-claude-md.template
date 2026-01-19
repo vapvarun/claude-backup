@@ -1,0 +1,56 @@
+# Plugin: {{PLUGIN_NAME}}
+
+> **Last indexed**: {{DATE}}
+> **Architecture docs**: `docs/architecture/PLUGIN_ARCHITECTURE.md`
+
+## Quick Context
+- **Main File**: `{{MAIN_FILE}}`
+- **Version**: {{VERSION}}
+- **Text Domain**: `{{TEXT_DOMAIN}}`
+- **Min PHP**: {{MIN_PHP}} | **Min WP**: {{MIN_WP}}
+
+## Entry Points
+| Purpose | File | Class/Function |
+|---------|------|----------------|
+| Bootstrap | `{{MAIN_FILE}}` | `{{MAIN_CLASS}}` |
+| Admin | `{{ADMIN_FILE}}` | `{{ADMIN_CLASS}}` |
+| Public | `{{PUBLIC_FILE}}` | `{{PUBLIC_CLASS}}` |
+
+## Key Hooks
+<!-- Top hooks from manifest -->
+| Hook | Type | Location |
+|------|------|----------|
+{{HOOKS_TABLE}}
+
+## REST API
+<!-- From rest-endpoints.txt -->
+| Endpoint | Method | Callback |
+|----------|--------|----------|
+{{REST_TABLE}}
+
+## Database Tables
+<!-- From db-tables.txt -->
+{{DB_TABLES}}
+
+## Architecture Docs
+- [Full Architecture](docs/architecture/PLUGIN_ARCHITECTURE.md)
+- Manifests: `docs/architecture/manifest/`
+  - classes.txt, functions.txt, hooks.txt
+  - rest-endpoints.txt, ajax-handlers.txt
+
+## Recent Changes
+<!-- Auto-updated after commits -->
+| Date | Type | Description |
+|------|------|-------------|
+{{RECENT_CHANGES}}
+
+## Memory Tags
+When storing memories for this plugin, use tags:
+```
+["{{PLUGIN_SLUG}}", "wordpress", "plugin"]
+```
+
+Recall context:
+```
+recall_memory({ tags: ["{{PLUGIN_SLUG}}"], limit: 10 })
+```
